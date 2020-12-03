@@ -1,10 +1,9 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::fs;
 use itertools::Itertools;
 
 fn main() {
-    let ns: Vec<i32> = BufReader::new(File::open("input").unwrap())
-        .lines().map(|x| x.unwrap().parse().unwrap()).collect();
+    let ns: Vec<i32> = fs::read_to_string("input").unwrap().lines()
+        .map(|x| x.parse().unwrap()).collect();
 
     for n in ns.iter().combinations(2) {
         if n[0] + n[1] == 2020 {
