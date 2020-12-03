@@ -5,15 +5,15 @@ fn main() {
     let ns: Vec<i32> = fs::read_to_string("input").unwrap().lines()
         .map(|x| x.parse().unwrap()).collect();
 
-    for n in ns.iter().combinations(2) {
-        if n[0] + n[1] == 2020 {
-            println!("Product of two: {}", n[0] * n[1]);
+    for (a, b) in ns.iter().tuple_combinations() {
+        if a + b == 2020 {
+            println!("Product of two: {}", a * b);
         }
     }
 
-    for n in ns.iter().combinations(3) {
-        if n[0] + n[1] + n[2] == 2020 {
-            println!("Product of three: {}", n[0] * n[1] * n[2]);
+    for (a, b, c) in ns.iter().tuple_combinations() {
+        if a + b + c == 2020 {
+            println!("Product of three: {}", a * b * c);
         }
     }
 }
