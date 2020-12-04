@@ -11,16 +11,10 @@ fn is_year_between(val: &str, lower: u32, upper: u32) -> bool {
 
 fn is_valid_height(val: &str) -> bool {
     let i = val.len() - 2;
-
-    match val[..i].parse::<u32>() {
-        Ok(n)  => {
-            match &val[i..] {
-                "cm" => 150 <= n && n <= 193,
-                "in" =>  59 <= n && n <=  76,
-                _    => false
-            }
-        }
-        Err(_) => false
+    match (val[..i].parse::<u32>(), &val[i..]) {
+        (Ok(n), "cm") => 150 <= n && n <= 193,
+        (Ok(n), "in") =>  59 <= n && n <=  76,
+        _             => false
     }
 }
 
