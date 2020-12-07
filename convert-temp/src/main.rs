@@ -16,7 +16,7 @@ fn main() {
     ];
 
     println!("{:10} {:10} {:10}", "Celsius", "Fahrenheit", "Kelvin");
-    for celsius in celsius.iter() {
+    for celsius in &celsius {
         println!("{:10.2} {:10.2} {:10.2}",
             celsius,
             celsius * 1.8 + 32., // Celsius to Fahrenheit

@@ -2,7 +2,7 @@ use std::fs;
 use std::collections::HashSet;
 use regex::Regex;
 
-fn is_year_between(val: &str, lower: u32, upper: u32) -> bool {
+fn is_text_between(val: &str, lower: u32, upper: u32) -> bool {
     match val.parse::<u32>() {
         Ok(n)  => lower <= n && n <= upper,
         Err(_) => false
@@ -10,11 +10,12 @@ fn is_year_between(val: &str, lower: u32, upper: u32) -> bool {
 }
 
 fn is_valid_height(val: &str) -> bool {
-    let i = val.len() - 2;
-    match (val[..i].parse::<u32>(), &val[i..]) {
-        (Ok(n), "cm") => 150 <= n && n <= 193,
-        (Ok(n), "in") =>  59 <= n && n <=  76,
-        _             => false
+    if let Some(s) = val.strip_suffix("cm") {
+        is_text_between(s, 150, 193)
+    } else if let Some(s) = val.strip_suffix("in") {
+        is_text_between(s, 59, 76)
+    } else {
+        false
     }
 }
 
@@ -38,9 +39,9 @@ fn main() {
             assert!(!seen.contains(key));
 
             let ok = match key {
-                "byr" => is_year_between(val, 1920, 2002),
-                "iyr" => is_year_between(val, 2010, 2020),
-                "eyr" => is_year_between(val, 2020, 2030),
+                "byr" => is_text_between(val, 1920, 2002),
+                "iyr" => is_text_between(val, 2010, 2020),
+                "eyr" => is_text_between(val, 2020, 2030),
                 "hgt" => is_valid_height(val),
                 "hcl" => hcl_re.is_match(val),
                 "ecl" => ecl_re.is_match(val),
