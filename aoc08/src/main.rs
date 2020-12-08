@@ -62,7 +62,7 @@ fn main() {
         instr[i] = match instr[i] {
             Instr::JMP(n) => Instr::NOP(n),
             Instr::NOP(n) => Instr::JMP(n),
-            any => any,
+            _ => continue,
         };
 
         if let SimResult::Term(acc) = simulate(&instr) {
