@@ -31,19 +31,19 @@ fn main() {
 
     let mut start = 0;
     let mut end = 0;
-    while end <= ns.len() {
-        let sum: u64 = ns[start..end].iter().sum();
+    let mut sum = 0;
+    while end < ns.len() {
         if sum < invalid_n {
+            sum += ns[end];
             end += 1;
         } else if sum > invalid_n {
+            sum -= ns[start];
             start += 1;
         } else {
             let min = ns[start..end].iter().min().unwrap();
             let max = ns[start..end].iter().max().unwrap();
-            println!("Found answer {} for region {:?}",
-                     min + max, &ns[start..end]);
-            end += 1;
-            start += 1;
+            println!("Found region with answer {}", min + max);
+            break;
         }
     }
 }
